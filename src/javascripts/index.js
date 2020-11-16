@@ -16,7 +16,7 @@ function displayCard(c){
             <h5 class="card-title">${c.title}</h5>
             <p class="card-text">${c.description}</p>
             <a href="#" class="btn btn-primary">Go somewhere</a>
-            <button class="btn btn-danger">Delete</a>
+            <button class="btn btn-danger delete-card">Delete</a>
           </div>
         </div>
     `
@@ -32,7 +32,7 @@ function displayCards(){
         document.querySelector('#cards').appendChild(col)
     }
 
-    document.querySelectorAll('button.btn-danger').forEach(function(b){
+    document.querySelectorAll('.delete-card').forEach(function(b){
         b.onclick = function(event){
             let cards = JSON.parse(localStorage.getItem('cards') || '[]')
             let ndx = -1
@@ -82,9 +82,14 @@ document.querySelector('#new_card').onclick = function(){
     document.querySelector('#cards').classList.add('d-none')
 }
 
-document.forms[0].querySelector('[type="button"]').onclick = function(){
+document.forms[0].querySelector('[type="button"]').onclick = function(e){
     document.querySelector('#cards').classList.remove('d-none')
     document.querySelector('#myForm').classList.add('d-none')
+
+    if (e.target.classList.contains('cancel-form')){
+        e.target.closest('form').reset()
+    }
+
 }
 
 document.forms[0].addEventListener('submit', addNewCard, false)
